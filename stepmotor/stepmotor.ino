@@ -24,6 +24,13 @@ float distance2_temp;
 
 int delayTime = 3000;
 
+const unsigned char pins[]  = { 2,3,4,5 };
+const unsigned char pinNum  = sizeof(pins) / sizeof(pins[0]);
+const unsigned char delayMs = 10;   // 每步动作间隔，控制速度
+char dir = 1;                 // 正负一用来控制转动方向
+static unsigned char pulsePin = 0;
+boolean isMotorTurn = false;
+
 void setup() {
 Serial.begin(9600); // start serial for output
 // initialize i2c as slave
@@ -31,7 +38,17 @@ Wire.begin(SLAVE_ADDRESS);
 // define callbacks for i2c communication
 Wire.onReceive(receiveData);//从机 接收 主机 发来的数据
 Wire.onRequest(sendData); //从机 请求 主机 发送数据
-Serial.println("Ready");
+
+for (unsigned char i = 0; i < pinNum; ++i)
+{
+     pinMode(pins[i], OUTPUT);
+     digitalWrite(pins[i], LOW);
+}
+
+
+
+
+/*
 pinMode(relay1,OUTPUT);
 pinMode(relay2,OUTPUT);
 pinMode(relay3,OUTPUT);
@@ -42,9 +59,14 @@ pinMode(relay7,OUTPUT);
 pinMode(relay8,OUTPUT);
 pinMode(Distance1_Trig,OUTPUT);
 pinMode(Distance1_Echo,INPUT);
+*/
+
+Serial.println("Ready");
+
 }
 void loop() {
   
+  /*
   getDistance(Distance1_Trig);
   distance1_temp = float(pulseIn(Distance1_Echo, HIGH)); //存储回波等待时间,
   distance1 = (distance1_temp * 17 )/1000; //把回波时间换算成cm
@@ -56,7 +78,15 @@ void loop() {
   distance2 = (distance2_temp * 17 )/1000; //把回波时间换算成cm
   //Serial.println("distance2: " + String(distance2));
   delay(50);
+  */
   
+  if (isMotorTurn)
+  {
+    digitalWrite(pins[pulsePin], HIGH);
+    delay(delayMs);
+    digitalWrite(pins[pulsePin], LOW);
+    pulsePin = (pulsePin + dir + pinNum) % pinNum;
+  }
  }
 // callback for received data
 void receiveData(int byteCount){
@@ -122,6 +152,16 @@ switch(data)
     delay(delayTime);
     digitalWrite(relay8,LOW);
     break;
+   case 50:
+     isMotorTurn = false;
+    break;
+   case 51:
+     isMotorTurn = true;
+    break;
+   case 52:
+     isMotorTurn = true;
+     dir = -1;
+    break; 
 }
 
 }
