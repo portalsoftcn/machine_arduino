@@ -157,6 +157,7 @@ switch(data)
     break;
    case 51:
      isMotorTurn = true;
+     dir = 1;
     break;
    case 52:
      isMotorTurn = true;
