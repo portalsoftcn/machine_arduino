@@ -155,11 +155,11 @@ switch(data)
    case 50:
      isMotorTurn = false;
     break;
-   case 51:
+   case 51://up
      isMotorTurn = true;
      dir = 1;
     break;
-   case 52:
+   case 52://down
      isMotorTurn = true;
      dir = -1;
     break; 
