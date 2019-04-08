@@ -34,14 +34,41 @@ void loop()
     switch(data)
     {
       case 1://FL,Up
-        stepperBR.step(0);
+        stepperFL.step(0);
        break;
       case 10://FL,Up
-        stepperBR.step(1);
+        stepperFL.step(1);
        break;
       case 11://FL,Down
-        stepperBR.step(-1);
+        stepperFL.step(-1);
        break;
+      case 2://FL,Up
+        stepperFR.step(0);
+       break;
+      case 20://FL,Up
+        stepperFR.step(1);
+       break;
+      case 21://FL,Down
+        stepperFR.step(-1);
+       break; 
+      case 3://FL,Up
+        stepperBL.step(0);
+       break;
+      case 30://FL,Up
+        stepperBL.step(1);
+       break;
+      case 31://FL,Down
+        stepperBL.step(-1);
+       break; 
+      case 4://FL,Up
+        stepperBR.step(0);
+       break;
+      case 40://FL,Up
+        stepperBR.step(1);
+       break;
+      case 41://FL,Down
+        stepperBR.step(-1);
+       break; 
        
     }
 }
