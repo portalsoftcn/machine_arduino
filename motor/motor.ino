@@ -8,11 +8,11 @@
 #define SLAVE_ADDRESS 0x04
 
 Stepper stepperBR(STEPS_PER_ROTOR_REV,2,4,3,5);
-Stepper stepperBL(STEPS_PER_ROTOR_REV,6,7,8,9);
+Stepper stepperBL(STEPS_PER_ROTOR_REV,6,8,7,9);
 Stepper stepperFR(STEPS_PER_ROTOR_REV,10,12,11,13);
 Stepper stepperFL(STEPS_PER_ROTOR_REV,A0,A2,A1,A3);
 
-int data;
+int data = -1;
 const float STEP_PER_OUR_REV = STEPS_PER_ROTOR_REV * GEAR_REDUCTION;
 
 void setup()
@@ -33,17 +33,29 @@ void loop()
 {  
     switch(data)
     {
-      case 1://FL,Up
+      case 0://up all
+        stepperFL.step(1);
+        stepperFR.step(1);
+        stepperBL.step(1);
+        stepperBR.step(1);
+        break;
+      case 1://down all
+        stepperFL.step(-1);
+        stepperFR.step(-1);
+        stepperBL.step(-1);
+        stepperBR.step(-1);
+        break;  
+      case 2://up all
         stepperFL.step(0);
-       break;
+        stepperFR.step(0);
+        stepperBL.step(0);
+        stepperBR.step(0);
+        break;
       case 10://FL,Up
         stepperFL.step(1);
        break;
       case 11://FL,Down
         stepperFL.step(-1);
-       break;
-      case 2://FL,Up
-        stepperFR.step(0);
        break;
       case 20://FL,Up
         stepperFR.step(1);
@@ -51,25 +63,34 @@ void loop()
       case 21://FL,Down
         stepperFR.step(-1);
        break; 
-      case 3://FL,Up
-        stepperBL.step(0);
-       break;
       case 30://FL,Up
         stepperBL.step(1);
        break;
       case 31://FL,Down
         stepperBL.step(-1);
        break; 
-      case 4://FL,Up
-        stepperBR.step(0);
-       break;
       case 40://FL,Up
         stepperBR.step(1);
        break;
       case 41://FL,Down
         stepperBR.step(-1);
+       break;
+      case 12: //FL+FR
+        stepperFL.step(1);
+        stepperFR.step(1);
        break; 
-       
+      case 13: //FL+BL
+        stepperFL.step(1);
+        stepperBL.step(1);
+       break; 
+      case 24: //FR+BR
+        stepperFR.step(1);
+        stepperBR.step(1);
+       break; 
+      case 34: //BL+BR
+        stepperBL.step(1);
+        stepperBR.step(1);
+       break;
     }
 }
 
