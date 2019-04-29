@@ -1,4 +1,4 @@
-#include <Stepper.h>
+30j#include <Stepper.h>
 #include <Wire.h>
 
 #define STEPS_PER_ROTOR_REV 32 //Motor inner step amount of one circle
@@ -45,7 +45,7 @@ void loop()
         stepperBL.step(-1);
         stepperBR.step(-1);
         break;  
-      case 2://up all
+      case 2://stop all
         stepperFL.step(0);
         stepperFR.step(0);
         stepperBL.step(0);
@@ -57,22 +57,22 @@ void loop()
       case 11://FL,Down
         stepperFL.step(-1);
        break;
-      case 20://FL,Up
+      case 20://FR,Up
         stepperFR.step(1);
        break;
-      case 21://FL,Down
+      case 21://FR,Down
         stepperFR.step(-1);
        break; 
-      case 30://FL,Up
+      case 30://BL,Up
         stepperBL.step(1);
        break;
-      case 31://FL,Down
+      case 31://BL,Down
         stepperBL.step(-1);
        break; 
-      case 40://FL,Up
+      case 40://BR,Up
         stepperBR.step(1);
        break;
-      case 41://FL,Down
+      case 41://BR,Down
         stepperBR.step(-1);
        break;
       case 12: //FL+FR
